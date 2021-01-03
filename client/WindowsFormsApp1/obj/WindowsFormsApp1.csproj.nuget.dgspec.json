@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ImageCode\\WindowsFormsApp1\\WindowsFormsApp1\\WindowsFormsApp1.csproj": {}
+    "D:\\GitHub\\other\\client\\WindowsFormsApp1\\WindowsFormsApp1.csproj": {}
   },
   "projects": {
-    "C:\\ImageCode\\WindowsFormsApp1\\WindowsFormsApp1\\WindowsFormsApp1.csproj": {
+    "D:\\GitHub\\other\\client\\WindowsFormsApp1\\WindowsFormsApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ImageCode\\WindowsFormsApp1\\WindowsFormsApp1\\WindowsFormsApp1.csproj",
+        "projectUniqueName": "D:\\GitHub\\other\\client\\WindowsFormsApp1\\WindowsFormsApp1.csproj",
         "projectName": "WindowsFormsApp1",
-        "projectPath": "C:\\ImageCode\\WindowsFormsApp1\\WindowsFormsApp1\\WindowsFormsApp1.csproj",
+        "projectPath": "D:\\GitHub\\other\\client\\WindowsFormsApp1\\WindowsFormsApp1.csproj",
         "packagesPath": "C:\\Users\\mount\\.nuget\\packages\\",
-        "outputPath": "C:\\ImageCode\\WindowsFormsApp1\\WindowsFormsApp1\\obj\\",
+        "outputPath": "D:\\GitHub\\other\\client\\WindowsFormsApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mount\\AppData\\Roaming\\NuGet\\NuGet.Config",

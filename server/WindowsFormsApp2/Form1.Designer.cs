@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsFormsApp2
+namespace server
 {
     partial class Form1
     {
