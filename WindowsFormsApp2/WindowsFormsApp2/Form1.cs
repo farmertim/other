@@ -26,11 +26,13 @@ namespace WindowsFormsApp2
         int Width = Screen.PrimaryScreen.Bounds.Width;
         //static int Width =Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Width);
         //static int Height = Convert.ToInt32(Screen.PrimaryScreen.WorkingArea.Height);
-        int count = 0;
-        
+        byte[] b;
         Socket listener;
+        int count = 0;
         bool check = false, check_save_image = false;
-
+        string result1 = "";
+        MemoryStream ms;
+        Socket serverSokcet;
         public Form1()
         {
             InitializeComponent();
@@ -44,84 +46,55 @@ namespace WindowsFormsApp2
             IPAddress ip = IPAddress.Parse("127.0.0.1");
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(new IPEndPoint(ip, myProt));  //繫結IP地址：埠  
-            listener.Listen(1);    //設定最多10個排隊連線請求
+            listener.Listen(10);    //設定最多10個排隊連線請求
             label3.Text = "啟動監聽{0}g" + listener.LocalEndPoint.ToString();
             check = true;
-
-
-
-
-
-
 
         }
         public void sendMSG()
         {
-            Socket serverSokcet = listener.Accept();
-            byte[] msg = Encoding.ASCII.GetBytes(Convert.ToString(count));
-            serverSokcet.Send(msg);
+            serverSokcet = listener.Accept();
+            //byte[] msg = Encoding.ASCII.GetBytes(Convert.ToString(b));
+            serverSokcet.Send(b);
+            count++;
             serverSokcet.Shutdown(SocketShutdown.Both);
             serverSokcet.Close();
         }
-        private void ReceiveMessage(object clientSocket)
-        {
-            Socket myClientSocket = (Socket)clientSocket;
-            while (true)
-            {
-                try
-                {
-                    //通過clientSocket接收資料
-                    int receiveNumber = myClientSocket.Receive(result);
-                    label4.Text = "接收客戶端" + myClientSocket.RemoteEndPoint.ToString() + "訊息 " + Encoding.ASCII.GetString(result, 0, receiveNumber);
-
-                }
-                catch (Exception ex)
-                {
-                    //label4.Text ="987";
-                    myClientSocket.Shutdown(SocketShutdown.Both);
-                    myClientSocket.Close();
-                    break;
-                }
-            }
-        }
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
 
-
+        public Bitmap getCreen() {
+           
+            Bitmap myImage = new Bitmap(Width, Height);
+            Graphics g = Graphics.FromImage(myImage);
+            g.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(Width, Height));
+            return myImage;
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
-
+            label5.Text = Convert.ToString(count);
             if (check)
             {
-                Bitmap myImage = new Bitmap(Width, Height);
-                Graphics g = Graphics.FromImage(myImage);
-                label4.Text = Convert.ToString(count);
-                string result1 = "";
                 System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();//引用stopwatch物件
 
                 sw.Reset();//碼表歸零
 
                 sw.Start();//碼表開始計時
-                g.CopyFromScreen(new Point(0, 0), new Point(0, 0), new Size(Width, Height));
-                IntPtr dc1 = g.GetHdc();
-                g.ReleaseHdc(dc1);
-                myImage.Save("C:\\picture\\"+ count + ".jpg");
-                
+                //Graphics g = Graphics.FromImage(myImage);
+                ms = new MemoryStream();
+                getCreen().Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);   //Here I use the BMP format
+                b = ms.ToArray();
+
+                ms.Close();
                 sendMSG();
                 sw.Stop();
                 result1 = sw.Elapsed.TotalMilliseconds.ToString();
                 label2.Text = result1;
-                count++;
-                
-                myImage.Dispose();
-                g.Dispose();
-                if (count == 100)
-                {
-                    count = 0;
-                }
+                label4.Text = "go";
             }
             else
             {

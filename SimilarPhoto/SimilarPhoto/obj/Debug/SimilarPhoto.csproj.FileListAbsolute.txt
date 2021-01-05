@@ -1,0 +1,10 @@
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\bin\Debug\SimilarPhoto.exe.config
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\bin\Debug\SimilarPhoto.exe
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\bin\Debug\SimilarPhoto.pdb
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.csprojAssemblyReference.cache
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.Form1.resources
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.Properties.Resources.resources
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.csproj.GenerateResource.cache
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.csproj.CoreCompileInputs.cache
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.exe
+D:\GitHub\other\SimilarPhoto\SimilarPhoto\obj\Debug\SimilarPhoto.pdb

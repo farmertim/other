@@ -85,8 +85,19 @@ namespace WindowsFormsApp1
 
                 // Receive the response from the remote device.    
                 int bytesRec = clientSocket.Receive(bytes);
-                count = Convert.ToInt32(Encoding.ASCII.GetString(bytes, 0, bytesRec));
-                label3.Text = Convert.ToString(count);
+
+                if (bytesRec > 0)
+                {
+                    
+                    MemoryStream ms = new MemoryStream(bytes);
+                    Image img = Image.FromStream(ms);
+                    //img.Save(imageName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    pictureBox1.Image = img;
+                    ms.Close();
+                }
+                count++;
+                //count = Convert.ToInt32(Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                //label3.Text = Convert.ToString(count);
                 clientSocket.Shutdown(SocketShutdown.Both);
                 clientSocket.Close();
             }
@@ -103,11 +114,12 @@ namespace WindowsFormsApp1
         private void timer1_Tick(object sender, EventArgs e)
         {
             clientServer();
-            s = "C:\\picture\\" + count + ".jpg";
-            FileStream fs = File.OpenRead(s);
+            label4.Text = Convert.ToString(count);
+            //s = "C:\\picture\\" + count + ".jpg";
+            //FileStream fs = File.OpenRead(s);
 
-            pictureBox1.Image = Image.FromStream(fs);
-            fs.Close();
+            //pictureBox1.Image = Image.FromStream(fs);
+            //fs.Close();
 
         }
 
