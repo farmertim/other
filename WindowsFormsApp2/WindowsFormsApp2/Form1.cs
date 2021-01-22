@@ -41,13 +41,15 @@ namespace WindowsFormsApp2
         MemoryMappedFile picture_memory = MemoryMappedFile.CreateOrOpen("picture", 10000000);
         Mutex mutex;
         int memory_location = 0, memoryCount = 0, check_first_memory = 0;
+        Capture capture=null;
+        Image<Bgr, Byte> fram;
         public Form1()
         {
             InitializeComponent();
             //label5.Text = Width + ":" +Height+"--"+width+":"+height;
             mutex = new Mutex(true, "test", out mutexCreat);
         }
-
+        
         public void ServerCode()
         {
 

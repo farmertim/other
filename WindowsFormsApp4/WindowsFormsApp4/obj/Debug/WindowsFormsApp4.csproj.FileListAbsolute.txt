@@ -7,3 +7,4 @@ D:\GitHub\other\WindowsFormsApp4\WindowsFormsApp4\obj\Debug\WindowsFormsApp4.csp
 D:\GitHub\other\WindowsFormsApp4\WindowsFormsApp4\obj\Debug\WindowsFormsApp4.csproj.CoreCompileInputs.cache
 D:\GitHub\other\WindowsFormsApp4\WindowsFormsApp4\obj\Debug\WindowsFormsApp4.exe
 D:\GitHub\other\WindowsFormsApp4\WindowsFormsApp4\obj\Debug\WindowsFormsApp4.pdb
+D:\GitHub\other\WindowsFormsApp4\WindowsFormsApp4\obj\Debug\WindowsFormsApp4.Form1.resources

@@ -19,20 +19,12 @@ namespace WindowsFormsApp4
 
     public partial class Form1 : Form
     {
-        private byte[] result = new byte[1024 * 20000];
-        public static string receivedPath;
-        public static string curMsg = "Stopped";
-        Bitmap srcBitmap;
         int count = 0;
         byte[] bytes;
         Socket clientSocket;
-        Image oImage = null;
         MemoryStream ms;
         int memoryCount = 0;
-        int memorySize = 0;
         int Data;
-        MemoryMappedFile picture_memory;
-        Mutex mutex;
         public Form1()
         {
             InitializeComponent();
@@ -139,7 +131,7 @@ namespace WindowsFormsApp4
             //mutex.WaitOne();
             if (checkMemory())
             {
-                if (count == 30)
+                if (count == 20)
                 {
                     memoryCount = 0;
 
@@ -148,7 +140,7 @@ namespace WindowsFormsApp4
                 MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
                 MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
-                byte[] Buffer = new byte[500000];
+                byte[] Buffer = new byte[5000000];
                 byte[] number = new byte[4];
 
                 label4.Text = "afd";
@@ -160,7 +152,7 @@ namespace WindowsFormsApp4
                 memoryCount += 4;
                 Data = BitConverter.ToInt32(number, 0);
                 accessor.ReadArray(memoryCount, Buffer, 0, Data);//memoryCount   
-                memoryCount += 150000;
+                memoryCount += 200000;
                 //label4.Text = Convert.ToString(memoryCount);
                 //label3.Text = Convert.ToString(memoryCount - 4 - 4 - 150000);
                 byte[] header = BitConverter.GetBytes(1);
@@ -182,7 +174,7 @@ namespace WindowsFormsApp4
             bool a = false;
             int tempmemory = 0, ch = 0;
             MemoryMappedFile mmf;
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 20; i++)
             {
                  mmf= MemoryMappedFile.OpenExisting("picture");
                 MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
@@ -198,7 +190,7 @@ namespace WindowsFormsApp4
                     a = true;
                     break;
                 }
-                tempmemory += 150008;
+                tempmemory += 200008;
                 accessor.Dispose();
             }
             /*MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
