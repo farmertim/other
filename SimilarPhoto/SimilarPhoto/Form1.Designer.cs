@@ -64,7 +64,7 @@ namespace SimilarPhoto
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(215, 194);
+            this.label2.Location = new System.Drawing.Point(185, 371);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 15);
             this.label2.TabIndex = 2;
@@ -82,7 +82,7 @@ namespace SimilarPhoto
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(106, 365);
+            this.label4.Location = new System.Drawing.Point(64, 258);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 15);
             this.label4.TabIndex = 4;
@@ -91,7 +91,7 @@ namespace SimilarPhoto
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(271, 365);
+            this.label5.Location = new System.Drawing.Point(212, 320);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 15);
             this.label5.TabIndex = 5;
@@ -100,7 +100,7 @@ namespace SimilarPhoto
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(424, 364);
+            this.label6.Location = new System.Drawing.Point(195, 398);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(41, 15);
             this.label6.TabIndex = 6;
@@ -108,7 +108,7 @@ namespace SimilarPhoto
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(565, 355);
+            this.button2.Location = new System.Drawing.Point(657, 415);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;

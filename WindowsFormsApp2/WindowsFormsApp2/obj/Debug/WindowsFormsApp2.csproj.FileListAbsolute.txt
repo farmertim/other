@@ -18,3 +18,13 @@ D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csp
 D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
 D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.dll
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.ML.dll
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.UI.dll
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.Util.dll
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\ZedGraph.dll
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.xml
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.ML.xml
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.CV.UI.xml
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\bin\Debug\Emgu.Util.xml
+D:\GitHub\other\WindowsFormsApp2\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CopyComplete

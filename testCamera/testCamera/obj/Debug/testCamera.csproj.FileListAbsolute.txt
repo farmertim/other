@@ -1,0 +1,10 @@
+D:\GitHub\other\testCamera\testCamera\bin\Debug\testCamera.exe.config
+D:\GitHub\other\testCamera\testCamera\bin\Debug\testCamera.exe
+D:\GitHub\other\testCamera\testCamera\bin\Debug\testCamera.pdb
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.csprojAssemblyReference.cache
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.Form1.resources
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.Properties.Resources.resources
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.csproj.GenerateResource.cache
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.csproj.CoreCompileInputs.cache
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.exe
+D:\GitHub\other\testCamera\testCamera\obj\Debug\testCamera.pdb
