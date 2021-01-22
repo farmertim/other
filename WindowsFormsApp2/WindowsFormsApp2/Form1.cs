@@ -32,18 +32,20 @@ namespace WindowsFormsApp2
         int Width = Screen.PrimaryScreen.Bounds.Width;
         byte[] b;
         Socket listener;
-        int count = 0, temp = 0,count1=0;
+        int count = 0, temp = 0, count1 = 0;
         bool check = false;
         string result1 = "";
         MemoryStream ms;
         Socket serverSokcet;
-        MemoryMappedFile picture_memory;
+        bool mutexCreat;
+        MemoryMappedFile picture_memory = MemoryMappedFile.CreateOrOpen("picture", 10000000);
+        Mutex mutex;
         int memory_location = 0, memoryCount = 0, check_first_memory = 0;
         public Form1()
         {
             InitializeComponent();
             //label5.Text = Width + ":" +Height+"--"+width+":"+height;
-
+            mutex = new Mutex(true, "test", out mutexCreat);
         }
 
         public void ServerCode()
@@ -116,11 +118,16 @@ namespace WindowsFormsApp2
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+
+
             int ttt = 0;
             if (check_first_memory == 0)
             {
+                mutex.WaitOne();
                 writeMemory();
-                if (count1 == 30) {
+                mutex.ReleaseMutex();
+                if (count1 == 30)
+                {
                     check_first_memory = 1;
                     memoryCount = 0;
                 }
@@ -128,41 +135,55 @@ namespace WindowsFormsApp2
             }
             else
             {
-                if (checkMemory() == 1)
+                mutex.WaitOne();
+                int tempmemory = 0, ch = 0;
+                for (int i = 0; i < 30; i++)
                 {
+                    MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
+                    MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
-
+                    byte[] Buffer = new byte[4];
+                    accessor.ReadArray(tempmemory, Buffer, 0, 4);//memoryCount  
+                    
+                    if (BitConverter.ToInt32(Buffer, 0) == 1)
+                    {
+                        memoryCount = tempmemory;
+                        count = i;
+                        ch = 1;
+                        break;
+                    }
+                    tempmemory += 150008;
+                    accessor.Dispose();
+                }
+                
+                if (ch == 1)
+                {
+                    mutex.ReleaseMutex();
+                    mutex.WaitOne();
                     writeMemory();
                     count++;
+                    mutex.ReleaseMutex();
+
+                    if (count == 30)
+                    {
+                        count = 0;
+                        memoryCount = 0;
+                    }
+                    temp++;
                 }
-                if (count == 30)
-                {
-                    count = 0;
-                    memoryCount = 0;
-                }
-                temp++;
             }
-            
-            
+
+
 
 
 
             //label2.Text = Convert.ToString(bytes1.Length);
 
-        }
-        public int checkMemory()
-        {
-            MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
-            MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
-            byte[] Buffer = new byte[4];
-
-            accessor.ReadArray(memoryCount, Buffer, 0, 4);//memoryCount  
-            
-            return BitConverter.ToInt32(Buffer, 0);
         }
         public void writeMemory()
         {
+            //mutex.WaitOne();
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();//引用stopwatch物件
 
             sw.Reset();//碼表歸零
@@ -174,7 +195,7 @@ namespace WindowsFormsApp2
             b = ms.ToArray();
             label5.Text = Convert.ToString(b.Length);
 
-            picture_memory = MemoryMappedFile.CreateOrOpen("picture", 5000000);  // 建立指定大小的記憶體檔案，會在應用程式退出時自動釋放
+            //picture_memory = MemoryMappedFile.CreateOrOpen("picture", 5000000);  // 建立指定大小的記憶體檔案，會在應用程式退出時自動釋放
             MemoryMappedViewAccessor accessor1 = picture_memory.CreateViewAccessor();
             byte[] header = BitConverter.GetBytes(2);
             byte[] pictureSize = BitConverter.GetBytes(b.Length);
@@ -188,6 +209,7 @@ namespace WindowsFormsApp2
             sw.Stop();
             result1 = sw.Elapsed.TotalMilliseconds.ToString();
             label2.Text = result1;
+            //mutex.ReleaseMutex();
 
         }
         private void button1_Click(object sender, EventArgs e)

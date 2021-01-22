@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp4
 {
 
     public partial class Form1 : Form
@@ -32,12 +32,12 @@ namespace WindowsFormsApp1
         int memorySize = 0;
         int Data;
         MemoryMappedFile picture_memory;
-        Mutex mutex ;
+        Mutex mutex;
         public Form1()
         {
             InitializeComponent();
         }
-        
+
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -49,7 +49,7 @@ namespace WindowsFormsApp1
             IPAddress ip = IPAddress.Parse("127.0.0.1");
             IPEndPoint remoteEP = new IPEndPoint(ip, 8888);
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-          
+
             try
             {
                 clientSocket.Connect(remoteEP); //配置伺服器IP與埠
@@ -64,25 +64,25 @@ namespace WindowsFormsApp1
 
                 if (bytesRec > 0)
                 {
-                    ms= new MemoryStream(bytes);
+                    ms = new MemoryStream(bytes);
                     //stringData = Encoding.UTF8.GetString(bytes);
                     //label3.Text = stringData;
                     //ms.Position = 100;
                     //Image img = Image.FromStream(ms);
                     //oImage = Image.FromStream(ms);
                     //pictureBox1.Image = oImage;
-                    
+
                     MemoryMappedFile mmf1 = MemoryMappedFile.OpenExisting("picture");
                     MemoryMappedViewAccessor accessor1 = mmf1.CreateViewAccessor();
                     //int data = accessor1.ReadInt32(4 * Convert.ToInt32(stringData));
                     //label4.Text = Convert.ToString(data);
-                    
+
                     MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
                     MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
-                    byte[] Buffer = new byte[5000000];
+                    byte[] Buffer = new byte[200000];
 
-                    accessor.ReadArray(memoryCount, Buffer, 0,1);//memoryCount    
+                    accessor.ReadArray(memoryCount, Buffer, 0, 1);//memoryCount    
                     MemoryStream ms1 = new MemoryStream(Buffer);
                     pictureBox1.Image = Image.FromStream(ms1);
                     accessor.Dispose();
@@ -90,7 +90,7 @@ namespace WindowsFormsApp1
 
 
 
-                    
+
                     ms.Close();
                 }
                 count++;
@@ -130,7 +130,7 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -142,7 +142,7 @@ namespace WindowsFormsApp1
                 if (count == 30)
                 {
                     memoryCount = 0;
-               
+
                     count = 0;
                 }
                 MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
@@ -150,18 +150,19 @@ namespace WindowsFormsApp1
 
                 byte[] Buffer = new byte[500000];
                 byte[] number = new byte[4];
-            
+
+                label4.Text = "afd";
                 int tempmemory = memoryCount;
                 memoryCount += 4;
-           
+
                 accessor.ReadArray(memoryCount, number, 0, 4);//memoryCount    
 
                 memoryCount += 4;
                 Data = BitConverter.ToInt32(number, 0);
                 accessor.ReadArray(memoryCount, Buffer, 0, Data);//memoryCount   
                 memoryCount += 150000;
-                label4.Text = Convert.ToString(memoryCount);
-                label3.Text = Convert.ToString(memoryCount - 4 - 4 - 150000);
+                //label4.Text = Convert.ToString(memoryCount);
+                //label3.Text = Convert.ToString(memoryCount - 4 - 4 - 150000);
                 byte[] header = BitConverter.GetBytes(1);
                 accessor.WriteArray(tempmemory, header, 0, 4);
 
@@ -169,20 +170,21 @@ namespace WindowsFormsApp1
                 pictureBox1.Image = Image.FromStream(ms1);
                 accessor.Dispose();
                 count++;
-                
+
             }
-                //mutex.ReleaseMutex();
-            
-            
+            //mutex.ReleaseMutex();
+
+
         }
-        
+
         public bool checkMemory()
         {
             bool a = false;
-            int tempmemory=0,ch=0;
+            int tempmemory = 0, ch = 0;
+            MemoryMappedFile mmf;
             for (int i = 0; i < 30; i++)
             {
-                MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
+                 mmf= MemoryMappedFile.OpenExisting("picture");
                 MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
                 byte[] Buffer = new byte[4];
