@@ -25,6 +25,9 @@ namespace WindowsFormsApp4
         MemoryStream ms;
         int memoryCount = 0;
         int Data;
+        Mutex mutex = Mutex.OpenExisting("test");
+        MemoryMappedFile mmf1 = MemoryMappedFile.OpenExisting("picture");
+        MemoryMappedViewAccessor accessor1;
         public Form1()
         {
             InitializeComponent();
@@ -122,51 +125,84 @@ namespace WindowsFormsApp4
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            //Mutex mutex = Mutex.OpenExisting("test");
-            //mutex.WaitOne();
-            if (checkMemory())
+            label3.Text = Convert.ToString(count);
+            if (count == 20)
             {
-                if (count == 20)
-                {
-                    memoryCount = 0;
+                memoryCount = 0;
 
-                    count = 0;
-                }
-                MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
-                MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
+                count = 0;
+            }
 
-                byte[] Buffer = new byte[5000000];
+            accessor1 = mmf1.CreateViewAccessor();
+
+            byte[] Buffer1 = new byte[4];
+            
+            mutex.WaitOne();
+            //label1.Text = Convert.ToString(memoryCount);
+            accessor1.ReadArray(memoryCount + 2000040, Buffer1, 0, 4);//memoryCount 
+            mutex.ReleaseMutex();
+            label1.Text = Convert.ToString(memoryCount + 2000040);
+            label2.Text = Convert.ToString(BitConverter.ToInt32(Buffer1, 0));
+            //mutex.WaitOne();
+            int value;
+            value = (int)((Buffer1[0] & 0xFF)
+                    | ((Buffer1[1] & 0xFF) << 8)
+                    | ((Buffer1[2] & 0xFF) << 16)
+                    | ((Buffer1[3] & 0xFF) << 24));
+            // label3.Text = Convert.ToString(value);
+            //mutex.ReleaseMutex();
+            label4.Text = Convert.ToString(value);
+            if (BitConverter.ToInt32(Buffer1, 0) == 2)
+            {
+                byte[] Buffer = new byte[50000000];
                 byte[] number = new byte[4];
-
-                label4.Text = "afd";
-                int tempmemory = memoryCount;
-                memoryCount += 4;
-
-                accessor.ReadArray(memoryCount, number, 0, 4);//memoryCount    
-
-                memoryCount += 4;
+                //label4.Text = Convert.ToString(tempmemory);
+                //memoryCount += 40;
+                //mutex = Mutex.OpenExisting("test");
+                mutex.WaitOne();
+                accessor1.ReadArray(memoryCount + 2000000, number, 0, 4);//memoryCount 
+                mutex.ReleaseMutex();
                 Data = BitConverter.ToInt32(number, 0);
-                accessor.ReadArray(memoryCount, Buffer, 0, Data);//memoryCount   
-                memoryCount += 200000;
-                //label4.Text = Convert.ToString(memoryCount);
-                //label3.Text = Convert.ToString(memoryCount - 4 - 4 - 150000);
-                byte[] header = BitConverter.GetBytes(1);
-                accessor.WriteArray(tempmemory, header, 0, 4);
-
+                mutex.WaitOne();
+                accessor1.ReadArray(memoryCount, Buffer, 0, Data);//memoryCount  
+                mutex.ReleaseMutex();
                 MemoryStream ms1 = new MemoryStream(Buffer);
                 pictureBox1.Image = Image.FromStream(ms1);
-                accessor.Dispose();
+
+
+
+                byte[] header = BitConverter.GetBytes(1);
+                mutex.WaitOne();
+                accessor1.WriteArray(memoryCount + 2000040, header, 0, header.Length);
+                mutex.ReleaseMutex();
+                /*accessor1.ReadArray(memoryCount + 2000040, Buffer1, 0, 4);//memoryCount  
+                label1.Text = Convert.ToString(memoryCount + 2000040);
+                label2.Text = Convert.ToString(BitConverter.ToInt32(Buffer1, 0));
+                //mutex.WaitOne();
+                value = (int)((Buffer1[0] & 0xFF)
+                        | ((Buffer1[1] & 0xFF) << 8)
+                        | ((Buffer1[2] & 0xFF) << 16)
+                        | ((Buffer1[3] & 0xFF) << 24));
+                // label3.Text = Convert.ToString(value);
+                //mutex.ReleaseMutex();
+                label4.Text = "aaa:"+Convert.ToString(value);*/
+                memoryCount += 2000080;
+                //label3.Text = Convert.ToString(header.Length);
+                //mutex.ReleaseMutex();
+
+
                 count++;
+                ms1.Dispose();
+
+                //mutex.ReleaseMutex();
 
             }
-            //mutex.ReleaseMutex();
-
-
+            accessor1.Dispose();
         }
 
         public bool checkMemory()
@@ -176,7 +212,7 @@ namespace WindowsFormsApp4
             MemoryMappedFile mmf;
             for (int i = 0; i < 20; i++)
             {
-                 mmf= MemoryMappedFile.OpenExisting("picture");
+                mmf = MemoryMappedFile.OpenExisting("picture");
                 MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor();
 
                 byte[] Buffer = new byte[4];
@@ -190,7 +226,7 @@ namespace WindowsFormsApp4
                     a = true;
                     break;
                 }
-                tempmemory += 200008;
+                tempmemory += 400008;
                 accessor.Dispose();
             }
             /*MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("picture");
