@@ -1,0 +1,10 @@
+D:\GitHub\other\pipclient2\pipclient2\bin\Debug\pipclient2.exe.config
+D:\GitHub\other\pipclient2\pipclient2\bin\Debug\pipclient2.exe
+D:\GitHub\other\pipclient2\pipclient2\bin\Debug\pipclient2.pdb
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.csprojAssemblyReference.cache
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.Form1.resources
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.Properties.Resources.resources
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.csproj.GenerateResource.cache
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.csproj.CoreCompileInputs.cache
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.exe
+D:\GitHub\other\pipclient2\pipclient2\obj\Debug\pipclient2.pdb

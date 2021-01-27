@@ -17,14 +17,16 @@ namespace pipserver
     public partial class Form1 : Form
     {
         Capture capture;
-        Bitmap bitmap=new Bitmap(1080,720);
+        Bitmap bitmap = new Bitmap(1080, 720);
         Image<Bgr, Byte> fram;
         MemoryStream ms;
-        NamedPipeServerStream server;
-        bool check = false;
+        NamedPipeServerStream serverC,serverP;
+        bool checkC = false, checkP = false;
         int count = 0;
         StreamReader reader;
         StreamWriter writer;
+        BinaryReader br;
+        BinaryWriter bw;
         Stream stream;
         byte[] b;
         public Form1()
@@ -32,35 +34,31 @@ namespace pipserver
             InitializeComponent();
             capture = new Capture(0);
             Application.Idle += new EventHandler(Application_idle);
-            
+
         }
         public void Application_idle(object sender, EventArgs e)
         {
-            if (check)
-            {
-                fram = capture.QueryFrame();
-                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();//引用stopwatch物件
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();//引用stopwatch物件
 
-                sw.Reset();//碼表歸零
+            sw.Reset();//碼表歸零
 
-                sw.Start();//碼表開始計時
-                pictureBox1.Image = fram.ToBitmap();
+            sw.Start();//碼表開始計時
+            fram = capture.QueryFrame();
 
-                ms = new MemoryStream();
-                fram.ToBitmap().Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                b = ms.ToArray();
+            pictureBox1.Image =fram.ToBitmap();
 
-                server.Write(b, 0, b.Length);
-                ms.Dispose();
-                sw.Stop();
-                label2.Text = Convert.ToString(sw.Elapsed.TotalMilliseconds.ToString());
-            }
-            //label1.Text = Convert.ToString(fram.Width);
-            //label4.Text = Convert.ToString(fram.Height);
-            //bitmap = fram.ToBitmap();
+            ms = new MemoryStream();
+            fram.ToBitmap().Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            b = ms.ToArray();
+            label3.Text = Convert.ToString(b.Length);
+            ms.Dispose();
+            sw.Stop();
+            label2.Text = Convert.ToString(sw.Elapsed.TotalMilliseconds.ToString());
+
         }
-        public void pipServer() {
-            
+        public void pipServer()
+        {
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -69,53 +67,52 @@ namespace pipserver
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            /*if (check)
-            {
-                byte[] b;
-                ms = new MemoryStream();
-                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                b = ms.ToArray();
-                label2.Text = Convert.ToString(b.Length);
-                server.Write(b, 0, b.Length);
-                ms.Dispose();
-            }*/
 
+            if (checkC)
+            {
+                serverC.Write(b, 0, b.Length);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            StartServer();
-            Task.Delay(1000).Wait();
-            
-        }
-        public void StartServer()
-        {
             Task.Factory.StartNew(() =>
             {
-                server = new NamedPipeServerStream("PipesOfPiece");
-                server.WaitForConnection();
-                reader = new StreamReader(server);
-                writer = new StreamWriter(server);
-                check = true;
+                serverC = new NamedPipeServerStream("PipeC#", PipeDirection.InOut, 10);
+                serverC.WaitForConnection();
+                reader = new StreamReader(serverC);
+                writer = new StreamWriter(serverC);
+                checkC = true;
             });
-        }
+            Task.Delay(1000).Wait();
 
-        private void button2_Click(object sender, EventArgs e)
+        }
+     
+
+        private void timer2_Tick(object sender, EventArgs e)
         {
-            var line = textBox1.Text;
-            writer.WriteLine(line);
-            writer.Flush();
+
+            if (checkP)
+            {
+
+                bw.Write((uint)b.Length);
+                bw.Write(b);
+                //bw.Flush();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            byte[] b;
-            ms = new MemoryStream();
-            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            b = ms.ToArray();
-            label2.Text = Convert.ToString(b.Length);
-            server.Write(b, 0,b.Length);
-            
+           
+            Task.Factory.StartNew(() =>
+            {
+                serverP = new NamedPipeServerStream("PipePython", PipeDirection.InOut, 10);
+                serverP.WaitForConnection();
+                br = new BinaryReader(serverP);
+                bw = new BinaryWriter(serverP);
+                checkP = true;
+            });
+            Task.Delay(1000).Wait();
         }
     }
 }

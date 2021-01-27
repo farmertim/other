@@ -34,7 +34,7 @@ namespace pipclient
         public void pipClient()
         {
 
-            client = new NamedPipeClientStream("PipesOfPiece");
+            client = new NamedPipeClientStream("PipeC#");
             client.Connect();
             reader = new StreamReader(client);
             writer = new StreamWriter(client);
