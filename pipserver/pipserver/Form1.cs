@@ -48,7 +48,7 @@ namespace pipserver
             pictureBox1.Image =fram.ToBitmap();
 
             ms = new MemoryStream();
-            fram.ToBitmap().Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            fram.ToBitmap().Save(ms, System.Drawing.Imaging.ImageFormat.Png);
             b = ms.ToArray();
             label3.Text = Convert.ToString(b.Length);
             ms.Dispose();

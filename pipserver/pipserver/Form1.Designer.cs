@@ -114,7 +114,7 @@ namespace pipserver
             // timer2
             // 
             this.timer2.Enabled = true;
-            this.timer2.Interval = 50;
+            this.timer2.Interval = 150;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Form1
